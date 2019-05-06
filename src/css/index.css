@@ -1,0 +1,52 @@
+@import "../css/StyleDepend/mReset.css";
+#addparentswrap .nav-to-add {
+  padding-top: 10px;
+  text-align: center;
+}
+#addparentswrap .nav-to-add .layui-icon {
+  font-size: 30px;
+  vertical-align: middle;
+  color: #009ffb;
+}
+#addparentswrap .nav-to-add .nav-tt {
+  vertical-align: middle;
+  color: #009ffb;
+}
+#addparentswrap .layui-form {
+  display: none;
+  padding-top: 10px;
+}
+#addparentswrap .layui-form .upload-img {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 16px;
+  height: 36px;
+  color: #009ffb;
+}
+#addparentswrap .layui-form .upload-img i {
+  margin-right: 6px;
+  font-size: 20px;
+  vertical-align: middle;
+}
+#addparentswrap .layui-form .upload-pic {
+  line-height: 1;
+  width: 100%;
+  text-align: center;
+}
+#addparentswrap .layui-form .img-bx {
+  text-align: center;
+  padding: 0 15px;
+}
+#addparentswrap .layui-form .img-bx .card-left {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+#addparentswrap .layui-form .img-bx #addimgbtn {
+  cursor: pointer;
+}
+#addparentswrap .layui-form .sub-js-parent {
+  margin: 40px 15px;
+}

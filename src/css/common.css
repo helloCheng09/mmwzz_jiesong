@@ -1,0 +1,143 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
+  background-color: #f0f0f1;
+  color: #333;
+}
+.layui-tab {
+  margin: 0;
+}
+.layui-tab .layui-tab-title {
+  height: auto;
+}
+.layui-tab .layui-tab-title .layui-this:after {
+  content: none;
+}
+.layui-tab .layui-tab-content {
+  padding: 0;
+}
+.head-bx {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+.head-bx .head-con {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #009ffb;
+  border-radius: 4px;
+}
+.head-bx .head-tag {
+  flex: 1;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #009ffb;
+}
+.head-bx .layui-this {
+  color: #fff;
+  background-color: #009ffb;
+}
+.parent-card-show {
+  padding: 10px 10px 0 10px;
+}
+.parent-card-show .card-bx {
+  position: relative;
+  display: flex;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.parent-card-show .parent-card-item {
+  position: relative;
+}
+.parent-card-show .parent-card-item .right {
+  flex: 1;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.parent-card-show .parent-card-item .right label {
+  padding: 6px 0;
+  color: #009ffb;
+}
+.parent-card-show .parent-card-item .right .time-dt {
+  font-size: 12px;
+  color: #808080;
+}
+.parent-card-show .parent-card-item .right .rel-dt {
+  display: inline-block;
+  text-align: right;
+}
+.parent-card-show .car-tag-num {
+  position: absolute;
+  border-width: 20px;
+  border-color: #009ffb #009ffb transparent transparent;
+  border-style: solid;
+  right: 0;
+  top: 0;
+  text-align: center;
+}
+.parent-card-show .car-tag-num span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(50%);
+  margin-top: -12px;
+  font-size: 14px;
+  z-index: 999;
+  color: #fff;
+}
+.parent-card-show .card-left {
+  width: 120px;
+  height: 120px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.delet-card {
+  display: none;
+  width: 100%;
+  text-align: center;
+}
+.delet-card .layui-btn {
+  width: 40%;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: #f50;
+  cursor: pointer;
+}
+.delet-card .edit-card-btn {
+  color: #009ffb;
+}
+.ts-tt {
+  padding: 0px 15px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #f50;
+}
+.show-upload-select {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.show-upload-select > div {
+  cursor: pointer;
+}
+.show-upload-select .select-upload-img {
+  width: 42px;
+  height: 42px;
+  padding: 0 14px;
+}
+.show-upload-select .label-tt {
+  font-size: 14px;
+  text-align: center;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+    <!-- /public/jiesong -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- <link href="../img/logo.png" rel="icon" sizes="32x32"> -->
+    <title>本地-添加校园接送家长</title>
+    <!-- css -->
+    <link rel="stylesheet" href="../js/JsDepend/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css?t=<?php echo time();?>">
+    <link rel="stylesheet" href="../css/index.css?t=<?php echo time();?>">
+    <link rel="stylesheet" href="../css/StyleDepend/wall-e.css?t=<?php echo time();?>">
+    <!-- <link rel="stylesheet" href="../css/StyleDepend/style.css?t=<php echo time();>"> -->
+    <!-- js -->
+    <script src="../js/JsDepend/jQuery.min.js" type="text/javascript"></script>
+    <script src="../js/wall-e.js" type="text/javascript"></script>
+</head>
+
+<body> 
+
+    <div id="addparentswrap" class="layui-tab " lay-filter="tab1">
+        <div class="head-bx">
+            <ul class="layui-tab-title head-con">
+                <li class="head-tag left">接送家长列表</li>
+                <li class=" head-tag right layui-this ">添加接送家长</li>
+            </ul>
+        </div>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item  js-show-tab">
+                <ul class="parent-card-show" id="insertslot">
+                    <!-- <li class="parent-card-item">
+                        <div class="card-bx">
+                            <img src="../img/logo.png" alt="妈妈" class="card-left">
+                            <div class="right">
+                                <div class="item-det">
+                                    <label for="relation">别名：</label>
+                                    <span class="rel-dt">妈妈</span>
+                                </div>
+                                <div class="item-de">
+                                    <label for="creat-time">创建时间：</label>
+                                    <span class="rel-dt time-dt">2019-05-04 13:01:05</span>
+                                </div>
+                            </div>
+                            <span class="car-tag-num">
+                                <span>1</span>
+                            </span>
+                        </div>
+                        <div class="delet-card">
+                            <button class="layui-btn layui-btn-danger  edit-card-btn">修改</button>
+                            <button class="layui-btn layui-btn-danger  det-card-btn">删除</button>
+                        </div>
+                    </li> -->
+                </ul>
+                <!-- <div class="nav-to-add">
+                    <i class="layui-icon-unlink  layui-icon"></i>
+                    <span class="nav-tt"> 您暂未添加接送家长 </span>
+                </div> -->
+                <span class="ts-tt">* 点击接送家长信息修改或删除</span>
+            </div>
+            <div class="layui-tab-item layui-show add-el-main js-show-tab" id="formslot">
+                <!-- <div class="nav-to-add">
+                    <i class="layui-icon-unlink  layui-icon"></i>
+                    <span class="nav-tt"> 您的接送家长已经达到上限 </span>
+                </div> -->
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="请输入接送家长别名"
+                                class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="upload-img">
+                            <!-- <i class="layui-icon layui-icon-camera-fill"></i> -->
+                            <div class="upload-pic">点击上传人脸识别照片</div>
+                            <input type="text" name="pic" hidden lay-verify="pic" value="">
+                        </div>
+                        <div class="img-bx" id="faceslot">
+                            <!-- <img id="addimgbtn" src="../img/add-btn.png" class="card-left"> -->
+                            <img src="../img/preload.png" class="card-left">
+                            <!-- <img src="http://www.mamawozaizhe.com/public/jiesong/img/logo.png" class="card-left"> -->
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item form-submit sub-js-parent">
+                        <button class="layui-btn" lay-submit lay-filter="subparent">提 交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<!-- js -->
+<script type="text/javascript" src="../js/JsDepend/layui/layui.all.js"></script>
+<script src="../js/index.js?t=<?php echo time();?>" type="text/javascript"></script>

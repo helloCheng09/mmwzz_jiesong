@@ -243,7 +243,7 @@
             var wallAlert = `
                 <div class="wall-alert" style="display:flex" >
                     <div class="wall-alert-content wall-animation ${aniClass}" style="display:block;animation-duration: ${animationDuration}ms;">
-                        ${content}1
+                        ${content}
                     </div>
                 </div>  
             `;

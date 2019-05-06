@@ -142,7 +142,7 @@
                     // 获取成功
                     var html = ''
                     // 本地缓存家长添加数量，最多四个
-                    sessionStorage.setItem( 'parentnum', res.data.length)
+                    sessionStorage.setItem('parentnum', res.data.length)
                     // console.log(sessionStorage.getItem('parentnum'))
                     var imglist = []
                     res.data.forEach((item, index) => {
@@ -175,15 +175,16 @@
                         </li> 
                         `
                     });
-                    $('#insertslot').append(html)
+                    $('#insertslot').append(html).after(`<span class="ts-tt">* 点击接送家长信息修改或删除</span>`)
+
                     // console.log(`preimg${index}`);
                     imglist.forEach(item => {
                         wall.preloadimg({ // 图片预加载
                             imgele: item.eleclass,
-                            img: item.img, 
+                            img: item.img,
                         })
                     })
-                    
+
                     // 展示删除按钮
                     $('.parent-card-item').off().click(function () {
                         var $self = $(this)
@@ -199,7 +200,7 @@
                         return false
                     })
                     // 如果家长信息为0 的时候，提示添加家长信息
-                    if(res.data.length == 0) {
+                    if (res.data.length == 0) {
                         var tshtml = `
                             <div class="nav-to-add" id="navtoadd">
                                 <i class="layui-icon-unlink  layui-icon"></i>
@@ -217,17 +218,19 @@
                         })
                     }
                 } else {
-
+                    wall.alert(res.msg, {
+                        delay: 1500
+                    })
                 }
             },
             error: function (err) {
-                wall.alert(res.err, {
+                wall.alert(res.err.msg, {
                     delay: 1500
                 })
             }
         })
         // 满4个家长，不让再添加
-        if(Number(sessionStorage.getItem('parentnum')) == 4) {
+        if (Number(sessionStorage.getItem('parentnum')) == 4) {
             var tshtml = `
                 <div class="nav-to-add">
                     <i class="layui-icon-unlink  layui-icon"></i>
@@ -236,7 +239,7 @@
             `
             $("#formslot").append(tshtml)
         } else {
-            $('.layui-form').show() 
+            $('.layui-form').show()
         }
         // 上传人脸识别图片
         $('#addimgbtn').click(function () {
@@ -246,7 +249,25 @@
                     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                     success: function (res) {
-                        var localIds = res.localIds;
+                        var localIds = res.localIds[0];
+                        wx.uploadImage({
+                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 0, // 默认为1，显示进度提示
+                            success: function (res) {
+                                var localId = res.localId
+                                var serverId = res.serverId; // 返回图片的服务器端ID
+                                // 展示图片
+                                if (!localId) { // 如果图片undefined
+                                    localId = "http://www.mamawozaizhe.com/public/jiesong/img/preload.png"
+                                }
+                                $('#addimgbtn').hide() // 隐藏上传按钮
+                                // 插入新图片
+                                $("#faceslot").append(` 
+                                    <img src=${localId}  class="card-left"/>
+                                `)
+                                $("input[name='pic']").val(serverId) // 赋值input
+                            }
+                        });
                     }
                 });
                 // // 选择相机
@@ -294,9 +315,11 @@
                 }
             })
             form.on('submit(subparent)', function (data) {
-
                 console.log(data.field) //被执行事件的元素DOM对象，一般为button对象
-
+                // 提交
+                wall.alert('提交后台', {
+                    delay: 1500
+                })
                 return false
             });
 

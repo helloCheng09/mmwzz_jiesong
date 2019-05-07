@@ -14,6 +14,41 @@
     function WallE() {
         this.v = '1.0.0'; // 版本号
     }
+    /**
+     * 微信
+     * 选择图片
+     * 上传图片
+     */
+    WallE.prototype.wx_uploadimg = function ( payload, option) {
+        var count = 1, // 选择照片数量
+            sizeType = ['original', 'compressed'], // 照片是否压缩
+            sourceType = ['album', 'camera']; // 相册还是相机
+        if (typeof (opton) == Object) {
+            !option.count ? count = 1 : count = option.count;
+            !option.sizeType ? sizeType = ['original', 'compressed'] : sizeType = option.sizeType;
+            !option.sourceType ? sourceType = ['album', 'camera'] : sourceType = option.sourceType;
+        }
+        wx.chooseImage({
+            count: count,
+            sizeType: sizeType, // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: sourceType, // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localIds = res.localIds[0];
+                wx.uploadImage({
+                    localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 0, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var localId = res.localId
+                        var serverId = res.serverId; // 返回图片的服务器端ID
+                        payload({
+                            localId: localId,
+                            serverId: serverId
+                        })
+                    }
+                });
+            }
+        });
+    }
 
     /**
      * 图片预加载

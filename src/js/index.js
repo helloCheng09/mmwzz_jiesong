@@ -4,6 +4,24 @@
      * Bind wall
      */
     wall.extend({
+        // 当没有家长信息时显示添加
+        shownavtoadd() {
+            var tshtml = `
+            <div class="nav-to-add" id="navtoadd">
+                <i class="layui-icon-unlink  layui-icon"></i>
+                <span class="nav-tt"> 您暂未添加接送家长 </span>
+            </div>
+        `
+            $("#insertslot").append(tshtml)
+
+            // 跳转到添加页面
+            $("#navtoadd").click(function () {
+                wall.showtabmain({
+                    showindex: 1,
+                    // ifremove: false,
+                })
+            })
+        },
         // 修改接送家长名片
         editcard(itemEle, resolve) {
             $(itemEle).off().click(function () {
@@ -46,6 +64,11 @@
                     setTimeout(() => {
                         $self.parents('li').remove()
                         wall.close(index)
+                        var lessnum = $('.parent-card-item').length
+                        sessionStorage.setItem('parentnum', lessnum)
+                        lessnum === 0 && $('.info-ts').remove();
+                        lessnum === 0 && wall.shownavtoadd();
+
                     }, 1000);
 
                     layer.close(confirmIndex)
@@ -57,6 +80,46 @@
         uploadimg(resolve) {
             layui.use('layer', function () {
                 var layer = layui.layer;
+                wall.wx_uploadimg(function (res) { // 上传图片回调执行
+                    console.log(res)
+                    var localId = res.localId
+                    var serverId = res.serverId; // 返回图片的服务器端ID
+                    // 展示图片
+                    if (!localId) { // 如果图片undefined
+                        localId = "http://www.mamawozaizhe.com/public/jiesong/img/preload.png"
+                    }
+                    $('#addimgbtn').hide() // 隐藏上传按钮
+                    $('.show-bx-face') && $('.show-bx-face').remove(); // 移除已有的图片
+                    // 插入新图片
+                    $("#faceslot").append(` 
+                        <div class="show-bx-face">
+                           <img src=${localId}  class="card-left" id="mainfaceimg" data-src=${localId} />
+                                <div class="reupload">
+                                    <div class="re-text">
+                                        重新上传
+                                    </div>
+                                </div>      
+                            </div>
+                           
+                            `)
+
+                    $("input[name='pic']").val(serverId) // 赋值input
+                    $('.reupload').off().click(function () { // 重新上传图片
+                        wall.uploadimg()
+                    })
+
+                    // 预览图片
+                    $("#mainfaceimg").click(function () {
+                        var urls = [
+                            $(this).data('src'),
+                        ]
+                        wx.previewImage({
+                            current: urls[0], // 当前显示图片的http链接
+                            urls: urls // 需要预览的图片http链接列表
+                        });
+                    })
+                })
+
                 // var index = layer.open({
                 //     type: 1,
                 //     content: `
@@ -84,8 +147,7 @@
                 // resolve(index)
             });
             // 弹出回调
-            resolve()
-
+            typeof resolve === 'function' && resolve();
         },
         // 移除layui-form-danger样式
         removedanger() {
@@ -175,7 +237,7 @@
                         </li> 
                         `
                     });
-                    $('#insertslot').append(html).after(`<span class="ts-tt">* 点击接送家长信息修改或删除</span>`)
+                    $('#insertslot').append(html).after(`<span class="ts-tt info-ts">* 点击接送家长信息修改或删除</span>`)
 
                     // console.log(`preimg${index}`);
                     imglist.forEach(item => {
@@ -201,21 +263,7 @@
                     })
                     // 如果家长信息为0 的时候，提示添加家长信息
                     if (res.data.length == 0) {
-                        var tshtml = `
-                            <div class="nav-to-add" id="navtoadd">
-                                <i class="layui-icon-unlink  layui-icon"></i>
-                                <span class="nav-tt"> 您暂未添加接送家长 </span>
-                            </div>
-                        `
-                        $("#insertslot").append(tshtml)
-
-                        // 跳转到添加页面
-                        $("#navtoadd").click(function () {
-                            wall.showtabmain({
-                                showindex: 1,
-                                // ifremove: false,
-                            })
-                        })
+                        wall.shownavtoadd()
                     }
                 } else {
                     wall.alert(res.msg, {
@@ -243,59 +291,7 @@
         }
         // 上传人脸识别图片
         $('#addimgbtn').click(function () {
-            wall.uploadimg(function (index) {
-                wx.chooseImage({
-                    count: 1,
-                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                    success: function (res) {
-                        var localIds = res.localIds[0];
-                        wx.uploadImage({
-                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
-                            isShowProgressTips: 0, // 默认为1，显示进度提示
-                            success: function (res) {
-                                var localId = res.localId
-                                var serverId = res.serverId; // 返回图片的服务器端ID
-                                // 展示图片
-                                if (!localId) { // 如果图片undefined
-                                    localId = "http://www.mamawozaizhe.com/public/jiesong/img/preload.png"
-                                }
-                                $('#addimgbtn').hide() // 隐藏上传按钮
-                                // 插入新图片
-                                $("#faceslot").append(` 
-                                    <img src=${localId}  class="card-left"/>
-                                `)
-                                $("input[name='pic']").val(serverId) // 赋值input
-                            }
-                        });
-                    }
-                });
-                // // 选择相机
-                // $('#selcamera').click(function () {
-                //     wx.chooseImage({
-                //         count: 1,
-                //         sizeType: ['compressed'],
-                //         sourceType: ['camera'],
-                //         success: function (res) {
-                //             var localIds = res.localIds;
-                //         }
-                //     });
-                //     layer.close(index) // 同时关闭弹窗
-                // })
-
-                // // 选择相册
-                // $('#selalbum').click(function () {
-                //     wx.chooseImage({
-                //         count: 1,
-                //         sizeType: ['compressed'],
-                //         sourceType: ['album'],
-                //         success: function (res) {
-                //             var localIds = res.localIds;
-                //         }
-                //     });
-                //     layer.close(index)
-                // })
-            })
+            wall.uploadimg(function (index) {})
         })
 
         // 提交接送家长表单
